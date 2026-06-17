@@ -1,10 +1,11 @@
 import os
+import sys
 import argparse
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from config import MAX_ITERATIONS
-from prompts import system_prompt
+from prompts import SYSTEM_PROMPT
 from call_function import available_functions, call_function
 
 def generate_content(
@@ -16,8 +17,7 @@ def generate_content(
         contents=messages,
         config=types.GenerateContentConfig(
             tools=[available_functions],
-            system_instruction=system_prompt,
-            # temperature=0
+            system_instruction=SYSTEM_PROMPT,
         ),
     )
 
@@ -86,7 +86,7 @@ def main() -> None:
             break
     else:
         print(f"Error: Max iterations ({MAX_ITERATIONS}) reached.")
-        exit(1)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

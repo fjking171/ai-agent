@@ -15,11 +15,11 @@ available_functions = types.Tool(
 )
 
 function_map: dict[str, Callable[..., str]] = {
-        "get_files_info": get_files_info,
-        "get_file_content": get_file_content,
-        "run_python_file": run_python_file,
-        "write_file": write_file,
-    }
+    "get_files_info": get_files_info,
+    "get_file_content": get_file_content,
+    "run_python_file": run_python_file,
+    "write_file": write_file,
+}
 
 
 def call_function(
@@ -38,8 +38,8 @@ def call_function(
             role="tool",
             parts=[
                 types.Part.from_function_response(
-                name=function_name,
-                response={"error": f"Unknown function: {function_name}"},
+                    name=function_name,
+                    response={"error": f"Unknown function: {function_name}"},
                 )
             ],
         )
@@ -48,11 +48,11 @@ def call_function(
     args["working_directory"] = "./calculator"
     function_result = function_map[function_name](**args)
     return types.Content(
-    role="tool",
-    parts=[
-        types.Part.from_function_response(
-            name=function_name,
-            response={"result": function_result},
-        )
-    ],
-)
+        role="tool",
+        parts=[
+            types.Part.from_function_response(
+                name=function_name,
+                response={"result": function_result},
+            )
+        ],
+    )

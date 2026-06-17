@@ -34,7 +34,7 @@ def run_python_file(
         if not os.path.isfile(file_path_abs):
             return f'Error: "{file_path}" does not exist or is not a regular file'
 
-        if file_path [-3:] != ".py":
+        if file_path[-3:] != ".py":
             return f'Error: "{file_path}" is not a Python file'
 
         command = ["python", file_path_abs]
@@ -54,8 +54,6 @@ def run_python_file(
             final_string_list.append(f'STDERR: {completed_process.stderr}')
         
         return "\n".join(final_string_list)
-
-
 
     except Exception as e:
         return f"Error: executing python file: {e}"

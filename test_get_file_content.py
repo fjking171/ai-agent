@@ -10,7 +10,7 @@ test_cases = [
 
 for working_directory, file_path in test_cases:
     result = get_file_content(working_directory, file_path)
-    trunc_status = ('truncated' in result)
+    trunc_status = 'truncated' in result
     print(f"{file_path} length: {len(result)}")
     if trunc_status:
         print(f"{file_path} truncated: {trunc_status}")

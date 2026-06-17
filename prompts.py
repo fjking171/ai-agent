@@ -1,4 +1,4 @@
-system_prompt = """
+SYSTEM_PROMPT: str = """
 You are a senior software engineer AI coding agent. You are precise, thorough, and methodical.
 
 AVAILABLE TOOLS
