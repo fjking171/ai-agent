@@ -17,7 +17,7 @@ def generate_content(
         config=types.GenerateContentConfig(
             tools=[available_functions],
             system_instruction=system_prompt,
-            temperature=0
+            # temperature=0
         ),
     )
 
@@ -57,9 +57,11 @@ def main() -> None:
             print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
             print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
-        if response.function_calls:
-            messages.append(response.candidates[0].content)
+        for candidate in response.candidates:
+            messages.append(candidate.content)
 
+        if response.function_calls:
+            function_responses: list[types.Part] = []
             for call in response.function_calls:
                 function_call_result = call_function(call, args.verbose)
                 if not function_call_result.parts:
@@ -75,7 +77,9 @@ def main() -> None:
                     Error: function "{call.name}({call.args})" result should return response, not None.
                     """)
 
-                messages.append(function_call_result)
+                function_responses.append(function_call_result.parts[0])
+
+            messages.append(types.Content(role="user", parts=function_responses))
         else:
             print("Response:")
             print(response.text)
